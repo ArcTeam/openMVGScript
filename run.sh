@@ -19,7 +19,7 @@ usage() {
   echo "OPTIONS"
   echo "Per avviare l'elaborazione' devi utilizzare le seguenti opzioni obbligatorie"
   echo "    -p path assoluto della cartella che contiene le immagini"
-  echo "    -c <numero>(max 95) numero di foto che compongono il cluster"
+  echo "    -c <numero>(max 1095) numero di foto che compongono il cluster"
   echo "Le prossime opzioni sono opzionali e puoi non utilizzarle"
   echo "Attenzione: se decidi di utilizzarle devi inserire un valire valido"
   echo "    -n <numero> numero dei core utilizzati dal software per l'elaborazione."
@@ -62,9 +62,9 @@ if [ -z "$cluster" ]
     usage
     exit 1
 fi
-if [ "$cluster" -gt 95 ]
+if [ "$cluster" -gt 1095 ]
   then
-    echo "Attenzione non puoi creare cluster con più di 95 foto"
+    echo "Attenzione non puoi creare cluster con più di 1095 foto"
     usage
     exit 1
 fi
@@ -83,52 +83,47 @@ then
 else
   mog="Le foto sono state ridimensionate a $res px di larghezza"
   mogrify -verbose -resize $res $input/*.jpg
-  make
 fi
 
 # controllo se esiste la cartella output, altrimenti la creo
 # se la cartella è già presente e se contiene i file di una precedente elaborazione, li cancello
-if [ ! -d output ]
+if [ ! -d $input/output ]
 then
-  mkdir output
+  mkdir $input/output
   echo "la cartella output è stata creata"
 else
-  rm -r output/*
+  rm -r $input/output/*
   echo "ok, la cartella output esiste già"
 fi
 
 # parto con il primo passaggio di openmvg
 # se ci sono errori blocco lo script altrimenti vado al secondo passaggio
 sequentialstart=$(date +"%s")
-python ./software/SfM/SfM_SequentialPipeline.py $input output/
+python ./software/SfM/SfM_SequentialPipeline.py $input $input/output/
 sequentialend=$(date +"%s")
-make
 echo "primo passaggio terminato, parto con il secondo..."
 
 # secondo passaggio
 reconstructionstart=$(date +"%s")
-Linux-x86_64-RELEASE/openMVG_main_openMVG2PMVS -i output/reconstruction_sequential/robust.bin -o output/reconstruction_sequential/sfmout
+Linux-x86_64-RELEASE/openMVG_main_openMVG2PMVS -i $input/output/reconstruction_sequential/robust.bin -o $input/output/reconstruction_sequential/sfmout
 reconstructionend=$(date +"%s")
-make
 echo "secondo passaggio terminato, inizio l'elaborazione con cmvs..."
 
 # cmvs
 cmvsstart=$(date +"%s")
-cmvs output/reconstruction_sequential/sfmout/PMVS/ $cluster $core
+cmvs $input/output/reconstruction_sequential/sfmout/PMVS/ $cluster $core
 cmvsend=$(date +"%s")
-make
 
-genOption output/reconstruction_sequential/sfmout/PMVS/
+genOption $input/output/reconstruction_sequential/sfmout/PMVS/
 echo "ok, fin qui tutto bene...modifico il file pmvs.sh"
 
-sed -i 's/pmvs\//output\/reconstruction_sequential\/sfmout\/PMVS\//g' output/reconstruction_sequential/sfmout/PMVS/pmvs.sh
-make
+sed -i 's/pmvs\//.\//g' $input/output/reconstruction_sequential/sfmout/PMVS/pmvs.sh
 echo "file modificato, procedo con l'ultimo passaggio (pmvs)"
 
 pmvsstart=$(date +"%s")
-sh output/reconstruction_sequential/sfmout/PMVS/pmvs.sh
+cd $input/output/reconstruction_sequential/sfmout/PMVS/
+sh ./pmvs.sh
 pmvsend=$(date +"%s")
-make
 
 end=$(date +"%s")
 enddate=$(date +%H:%M:%S)
@@ -154,3 +149,4 @@ echo "elaborazione partita alle   $startDate"
 echo "elaborazione terminata alle $enddate"
 echo "----------------------------------------------"
 echo "L'elaborazione è durata complessivamente $(($durata / 3600)) ore $(($durata / 60)) minuti e $(($durata % 60)) secondi"
+
