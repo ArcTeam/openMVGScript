@@ -82,7 +82,7 @@ then
   exit 1
 else
   mog="Le foto sono state ridimensionate a $res px di larghezza"
-  mogrify -verbose -resize $res $input/*.jpg && mogrify -verbose -resize $res $input/*.JPG
+  mogrify -verbose -resize $res $input/*.[Jj][Pp][Gg]
 fi
 
 # controllo se esiste la cartella output, altrimenti la creo
