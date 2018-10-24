@@ -92,7 +92,7 @@ then
   mkdir $input/output
   echo "la cartella output è stata creata"
 else
-  rm -r $input/output/*
+  rm -r $input/output/ && mkdir $input/output
   echo "ok, la cartella output esiste già"
 fi
 
