@@ -8,7 +8,9 @@
 
 Per avviare l'elaborazione' devi utilizzare le seguenti opzioni obbligatorie:
 
--p&nbsp;&nbsp;&nbsp;&nbsp; path assoluto della cartella che contiene le immagini
+-i&nbsp;&nbsp;&nbsp;&nbsp; path assoluto della cartella che contiene le immagini
+
+-o&nbsp;&nbsp;&nbsp;&nbsp; path assoluto della cartella in cui salvare le elaborazioni
 
 -c&nbsp;&nbsp;&nbsp;&nbsp; <numero>(max 1095) numero di foto che compongono il cluster
 
@@ -23,4 +25,5 @@ nproc
 ```
 
 -m <widthxheight> utilizza mogrify per ridimensionare le foto prima di avviare l'elaborazione.
-                      Puoi indicare anche solo la larghezza es. 4500x "
+
+Puoi indicare anche solo la larghezza es. 4500x "
