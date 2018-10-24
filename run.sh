@@ -154,3 +154,4 @@ echo "elaborazione partita alle   $startDate"
 echo "elaborazione terminata alle $enddate"
 echo "----------------------------------------------"
 echo "L'elaborazione è durata complessivamente $(($durata / 3600)) ore $(($durata / 60)) minuti e $(($durata % 60)) secondi"
+xdg-open $output/output/reconstruction_sequential/sfmout/PMVS/models/
