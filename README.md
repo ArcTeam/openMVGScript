@@ -10,7 +10,7 @@ Per avviare l'elaborazione' devi utilizzare le seguenti opzioni obbligatorie:
 
 -p&nbsp;&nbsp;&nbsp;&nbsp; path assoluto della cartella che contiene le immagini
 
--c&nbsp;&nbsp;&nbsp;&nbsp; <numero>(max 95) numero di foto che compongono il cluster
+-c&nbsp;&nbsp;&nbsp;&nbsp; <numero>(max 1095) numero di foto che compongono il cluster
 
 Le prossime opzioni sono opzionali e puoi non utilizzarle
 
