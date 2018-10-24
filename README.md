@@ -12,9 +12,9 @@ Per avviare l'elaborazione' devi utilizzare le seguenti opzioni obbligatorie:
 
 -c&nbsp;&nbsp;&nbsp;&nbsp; <numero>(max 1095) numero di foto che compongono il cluster
 
-Le prossime opzioni sono opzionali e puoi non utilizzarle
+Le prossime opzioni non sono obbligatorie e puoi non utilizzarle
 
-Attenzione: se decidi di utilizzarle devi inserire un valire valido
+Attenzione: se decidi di utilizzarle devi inserire un valore valido
 
 -n&nbsp;&nbsp;&nbsp;&nbsp;<numero> numero dei core utilizzati dal software per l'elaborazione. Se non indicato verranno utilizzati tutti i cores disponibili.
 Se indichi un numero maggiore rispetto ai core disponibili, verranno comunque utilizzati solo  i cores disponibili. Per sapere quanti sono i cores effettivi digita da terminale il comando
